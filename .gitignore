@@ -26,3 +26,8 @@ readme.html
 [Oo]bj/
 [Bb]in
 [Dd]ebug*/
+ipch/
+x64/
+build/
+other/
+
