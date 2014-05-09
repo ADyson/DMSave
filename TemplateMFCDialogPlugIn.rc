@@ -1,0 +1,350 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#include ""res\\TemplateMFCDialogPlugIn.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""     // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 2,10,1282,0
+ PRODUCTVERSION 2,10,1282,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName", "TODO: <Company name>"
+            VALUE "FileDescription", "TODO: <File description>"
+            VALUE "FileVersion", "2.10.1282.0"
+            VALUE "InternalName", "TemplateMFCDialogPlugIn.dll"
+            VALUE "LegalCopyright", "TODO: (c) <Company name>.  All rights reserved."
+            VALUE "OriginalFilename", "TemplateMFCDialogPlugIn.dll"
+            VALUE "ProductName", "TODO: <Product name>"
+            VALUE "ProductVersion", "2.10.1282.0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DMDIALOG DIALOGEX 0, 0, 86, 58
+STYLE DS_SETFONT | WS_CHILD | WS_VISIBLE
+FONT 8, "Calibri", 400, 0, 0x0
+BEGIN
+    CONTROL         "Radio1",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,7,2,39,10
+    CONTROL         "Radio2",IDC_RADIO2,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,7,12,39,10
+    PUSHBUTTON      "Button1",IDC_BUTTON1,5,25,50,14,WS_GROUP
+    PUSHBUTTON      "Button2",IDC_BUTTON2,5,41,50,14,WS_GROUP
+END
+
+IDD_DMPROPERTYPAGE1 DIALOGEX 0, 0, 106, 44
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Onions"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    CONTROL         "Radio1",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON | WS_GROUP,6,9,39,10
+    CONTROL         "Radio2",IDC_RADIO2,"Button",BS_AUTORADIOBUTTON,6,23,39,10
+    PUSHBUTTON      "I like onions",IDC_ONIONS_BUTTON,52,4,50,14,WS_GROUP
+    PUSHBUTTON      "Button1",IDC_BUTTON1,52,24,50,14
+END
+
+IDD_DMPROPERTYPAGE2 DIALOGEX 0, 0, 106, 44
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Carrots"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    PUSHBUTTON      "I like carrots",IDC_CARROTS_BUTTON,27,14,50,14
+END
+
+IDD_PROPPAGETEST1 DIALOGEX 0, 0, 200, 75
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Page 1"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "Button 1",ID_BUTTON_1,143,6,50,16
+    PUSHBUTTON      "Button 2",ID_BUTTON_2,143,32,50,16
+    LTEXT           "Property Page 1",IDC_STATIC,21,19,52,8
+END
+
+IDD_PROPPAGETEST2 DIALOGEX 0, 0, 200, 75
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Page 2"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "Button 3",ID_BUTTON_3,85,53,50,16
+    PUSHBUTTON      "Button 4",ID_BUTTON_4,143,53,50,16
+    LTEXT           "Property Page 2",IDC_STATIC,30,20,52,8
+END
+
+IDD_TESTDIALOG1 DIALOGEX 0, 0, 231, 67
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,112,43,50,16
+    PUSHBUTTON      "Cancel",IDCANCEL,173,43,50,16
+    LTEXT           "String Value 1",IDC_STRING_VALUE_1_LABEL,15,15,54,10
+    EDITTEXT        IDC_STRING_VALUE_1_EDIT,70,13,104,13,ES_AUTOHSCROLL
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_DMDIALOG, DIALOG
+    BEGIN
+        VERTGUIDE, 30
+        VERTGUIDE, 46
+        BOTTOMMARGIN, 55
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.K.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_OPERATOR DIALOGEX 0, 0, 141, 154
+STYLE DS_SETFONT | WS_CHILD
+FONT 7, "Segoe UI", 400, 0, 0x0
+BEGIN
+    LTEXT           "Operator:",IDC_STATIC,13,11,42,8
+    COMBOBOX        IDC_COMBO1,54,9,75,64,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Specimen:",IDC_STATIC,13,27,42,8
+    EDITTEXT        IDC_SPECIMENEDIT,54,24,75,14,ES_AUTOHSCROLL
+    LTEXT           "Area #:",IDC_STATIC,17,43,31,8
+    EDITTEXT        IDC_AREAEDITSPIN,84,41,35,14,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "",IDC_SPINAREABUTTON,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | WS_TABSTOP,118,41,11,14
+    PUSHBUTTON      "Set Aberration Values",IDC_BUTTON1,28,60,84,14
+    PUSHBUTTON      "Set Folder",IDC_BUTTON2,22,79,46,14
+    PUSHBUTTON      "Save Image",IDC_BUTTON3,72,79,46,14
+    EDITTEXT        IDC_EDIT2,13,106,113,34,ES_MULTILINE | ES_AUTOHSCROLL
+    LTEXT           "Add description text:",IDC_STATIC,14,97,79,8
+END
+
+IDD_ABDIALOG DIALOGEX 0, 0, 174, 197
+STYLE DS_SETFONT | DS_3DLOOK | WS_POPUP | WS_CAPTION
+CAPTION "Aberration Values"
+FONT 7, "Segoe UI", 400, 0, 0x0
+BEGIN
+    EDITTEXT        IDC_A2MAG,32,22,35,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_A2ANG,69,22,35,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_B2MAG,32,36,35,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_B2ANG,69,36,35,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_A3MAG,32,49,35,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_A3ANG,69,50,35,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_C3MAG,32,64,35,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_S3MAG,32,78,35,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_S3ANG,69,79,35,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_B3MAG,32,93,35,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_B3ANG,69,93,35,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_A4MAG,32,107,35,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_A4ANG,69,107,35,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_S4MAG,32,122,35,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_S4ANG,69,122,35,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_A5MAG,32,136,35,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_A5ANG,69,136,35,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_S5MAG,32,151,35,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_S5ANG,69,151,35,14,ES_AUTOHSCROLL
+    CONTROL         "Include?",IDC_CHECKA2,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,112,23,43,10
+    CONTROL         "Include?",IDC_CHECKB2,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,112,38,43,10
+    CONTROL         "Include?",IDC_CHECKA3,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,112,53,43,10
+    CONTROL         "Include?",IDC_CHECKC3,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,112,67,43,10
+    CONTROL         "Include?",IDC_CHECKS3,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,112,82,43,10
+    CONTROL         "Include?",IDC_CHECKB3,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,112,96,43,10
+    CONTROL         "Include?",IDC_CHECKA4,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,112,110,43,10
+    CONTROL         "Include?",IDC_CHECKS4,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,112,125,43,10
+    CONTROL         "Include?",IDC_CHECKA5,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,112,139,43,10
+    CONTROL         "Include?",IDC_CHECKS5,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,112,154,43,10
+    DEFPUSHBUTTON   "OK",IDOK,34,172,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,90,172,50,14
+    LTEXT           "A2",IDC_STATIC,15,24,10,8
+    LTEXT           "B2",IDC_STATIC,15,38,9,8
+    LTEXT           "C3",IDC_STATIC,15,66,10,8
+    LTEXT           "S3",IDC_STATIC,15,81,9,8
+    LTEXT           "B3",IDC_STATIC,15,96,9,8
+    LTEXT           "A4",IDC_STATIC,15,110,10,8
+    LTEXT           "S4",IDC_STATIC,15,125,9,8
+    LTEXT           "A5",IDC_STATIC,15,139,10,8
+    LTEXT           "S5",IDC_STATIC,15,155,9,8
+    LTEXT           "mag (nm)",IDC_STATIC,34,11,32,8
+    LTEXT           "angle (deg)",IDC_STATIC,69,11,40,8
+    LTEXT           "A3",IDC_STATIC,15,52,10,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_OPERATOR, DIALOG
+    BEGIN
+        LEFTMARGIN, 4
+        RIGHTMARGIN, 136
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 147
+    END
+
+    IDD_ABDIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 167
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 190
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_OPERATOR DLGINIT
+BEGIN
+    IDC_COMBO1, 0x403, 5, 0
+0x6441, 0x6d61, "\000" 
+    IDC_COMBO1, 0x403, 5, 0
+0x6c41, 0x7865, "\000" 
+    IDC_COMBO1, 0x403, 4, 0
+0x6e41, 0x0061, 
+    IDC_COMBO1, 0x403, 6, 0
+0x7341, 0x6d73, 0x0061, 
+    IDC_COMBO1, 0x403, 7, 0
+0x654a, 0x6572, 0x796d, "\000" 
+    IDC_COMBO1, 0x403, 5, 0
+0x654e, 0x6c69, "\000" 
+    IDC_COMBO1, 0x403, 5, 0
+0x6552, 0x617a, "\000" 
+    IDC_COMBO1, 0x403, 8, 0
+0x6952, 0x6863, 0x7261, 0x0064, 
+    IDC_COMBO1, 0x403, 6, 0
+0x6f52, 0x6962, 0x006e, 
+    IDC_COMBO1, 0x403, 6, 0
+0x7453, 0x7665, 0x0065, 
+    0
+END
+
+#endif    // English (U.K.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#include "res\TemplateMFCDialogPlugIn.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"     // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
