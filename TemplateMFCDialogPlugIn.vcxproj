@@ -348,7 +348,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AberrationDialog.cpp" />
-    <ClCompile Include="DMDialog.cpp" />
+    <ClCompile Include="DirectoryBuilder.cpp" />
     <ClCompile Include="DMOperator.cpp" />
     <ClCompile Include="NumEdit.cpp" />
     <ClCompile Include="SpinAreaButton.cpp" />
@@ -362,7 +362,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AberrationDialog.h" />
-    <ClInclude Include="DMDialog.h" />
+    <ClInclude Include="DirectoryBuilder.h" />
     <ClInclude Include="DMOperator.h" />
     <ClInclude Include="NumEdit.h" />
     <ClInclude Include="Resource.h" />

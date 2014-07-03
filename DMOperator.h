@@ -12,6 +12,7 @@ class CDMOperator : public CDialog
 public:
 	CDMOperator(CWnd* pParent = NULL);   // standard constructor
 	virtual ~CDMOperator();
+	
 	int pathSet;
 	std::string filepath;
 
@@ -19,7 +20,11 @@ public:
 	std::string SpecimenName;
 	std::string AreaNumber;
 
+	std::vector<std::string> UserNames;
+	std::vector<std::string> UserDirectories;
+	std::vector<std::vector<int>> UserPathOrders;
 
+	int* pathorder;
 
 // Dialog Data
 	enum { IDD = IDD_OPERATOR };
@@ -47,6 +52,14 @@ public:
 	afx_msg void OnEditUpdateSpecimen();
 	afx_msg void OnEditUpdateArea();
 	afx_msg void OnComboChange();
+
+	int NumUsers;
+
+	void InsertSavedNames();
+	void LoadCustomDirectory(int user);
+
+	void SavePathOrder();
+	void LoadPathOrder(int user);
 
 	void UpdateVals(std::string a2magout,std::string a2angout,bool a2checkout,
 					std::string b2magout,std::string b2angout,bool b2checkout,
@@ -92,4 +105,6 @@ public:
 	std::string s5mag;
 	std::string s5ang;
 	bool s5check;
+	afx_msg void OnBnClickedButton4();
+	afx_msg void OnBnClickedButton5();
 };

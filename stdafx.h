@@ -65,3 +65,6 @@
 #define _GATAN_USE_STL_STRING
 #include "DMPlugInBasic.h"
 #include "DMPlugInMFCUtility.h"
+//#include <algorithm>
+
+namespace DigitalMicrograph = Gatan::DM;

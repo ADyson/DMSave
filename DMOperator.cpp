@@ -5,8 +5,18 @@
 #include "TemplateMFCDialogPlugIn.h"
 #include "DMOperator.h"
 #include "AberrationDialog.h"
+#include "DirectoryBuilder.h"
 #include "shlobj.h"
 #include <sstream>
+#include "boost\lexical_cast.hpp"
+
+
+enum NameBlocks
+{
+	Date,
+	Specimen,
+	Area
+};
 
 template<class T>
     T fromString(const std::string& s)
@@ -96,8 +106,8 @@ CDMOperator::CDMOperator(CWnd* pParent /*=NULL*/)
 
 CDMOperator::~CDMOperator()
 {
-	DM::TagGroup pers;
-	pers = DM::GetPersistentTagGroup();
+	DigitalMicrograph::TagGroup pers;
+	pers = DigitalMicrograph::GetPersistentTagGroup();
 
 	pers.DeleteTagWithLabel("Operator Panel:Area");
 	pers.DeleteTagWithLabel("Operator Panel:filepath");
@@ -125,6 +135,8 @@ BEGIN_MESSAGE_MAP(CDMOperator, CDialog)
 	ON_EN_UPDATE(IDC_SPECIMENEDIT, OnEditUpdateSpecimen)
 	ON_EN_UPDATE(IDC_AREAEDITSPIN, OnEditUpdateArea)
 	ON_CBN_SELCHANGE(IDC_COMBO1,OnComboChange)
+	ON_BN_CLICKED(IDC_BUTTON4, &CDMOperator::OnBnClickedButton4)
+	ON_BN_CLICKED(IDC_BUTTON5, &CDMOperator::OnBnClickedButton5)
 END_MESSAGE_MAP()
 
 
@@ -158,28 +170,116 @@ BOOL CDMOperator::OnInitDialog()
 	m_Spin.SetRange(1, 40);
 	m_Spin.SetPos(1);
 
+	// Check if the number of operators has been set, if not set it to zero;
+	DigitalMicrograph::TagGroup pers;
+	pers = DigitalMicrograph::GetPersistentTagGroup();
+
+
+	DigitalMicrograph::String NumUsersDM;
+	//std::string NumUsers;
+	
+	pathorder = new int[3];
+
+	pathorder[0] = NameBlocks::Specimen;
+	pathorder[1] = NameBlocks::Date;
+	pathorder[2] = NameBlocks::Area;
+
+
+	if (DigitalMicrograph::TagGroupDoesTagExist(pers,"Operator Panel:Users"))
+	{
+		DigitalMicrograph::TagGroupGetTagAsString(pers,"Operator Panel:Users",NumUsersDM);
+	}
+	else
+	{
+		DigitalMicrograph::TagGroupSetTagAsString(pers,"Operator Panel:Users","0");
+		NumUsersDM = "0";
+	}
+
+	try
+	{
+		NumUsers = boost::lexical_cast<int>(NumUsersDM);
+	}
+	catch(...)
+	{
+		NumUsers=0;
+	}
+
 
 	// TODO:  Add extra initialization here
 	ModifyStyle(0, WS_GROUP | WS_TABSTOP);
 
+	// Get list of installed operators and there custom settings...
+	for(int i = 0; i < NumUsers; i++)
+	{
+		std::string usertagpath = "Operator Panel:UserDirs:"+boost::lexical_cast<std::string>(i);
+		std::string usertagpath2 = "Operator Panel:UserNames:"+boost::lexical_cast<std::string>(i);
+
+		std::string usertagpath3 = "Operator Panel:UserPathOrders:"+boost::lexical_cast<std::string>(i)+":0";
+		std::string usertagpath4 = "Operator Panel:UserPathOrders:"+boost::lexical_cast<std::string>(i)+":1";
+		std::string usertagpath5 = "Operator Panel:UserPathOrders:"+boost::lexical_cast<std::string>(i)+":2";
+		
+		DigitalMicrograph::String UserName;
+		DigitalMicrograph::String UserDirectory;
+		DigitalMicrograph::String UserPathOrder1;
+		DigitalMicrograph::String UserPathOrder2;
+		DigitalMicrograph::String UserPathOrder3;
+
+		DigitalMicrograph::TagGroupGetTagAsString(pers,usertagpath2.c_str(),UserName);
+		DigitalMicrograph::TagGroupGetTagAsString(pers,usertagpath.c_str(),UserDirectory);
+		DigitalMicrograph::TagGroupGetTagAsString(pers,usertagpath3.c_str(),UserPathOrder1);
+		DigitalMicrograph::TagGroupGetTagAsString(pers,usertagpath4.c_str(),UserPathOrder2);
+		DigitalMicrograph::TagGroupGetTagAsString(pers,usertagpath5.c_str(),UserPathOrder3);
+
+		UserNames.push_back(UserName);
+		UserDirectories.push_back(UserDirectory);
+		
+		std::vector<int> temppathorder;
+		temppathorder.push_back(boost::lexical_cast<int>(UserPathOrder1));
+		temppathorder.push_back(boost::lexical_cast<int>(UserPathOrder2));
+		temppathorder.push_back(boost::lexical_cast<int>(UserPathOrder3));
+					
+		UserPathOrders.push_back(temppathorder);
+	}
+
+
+	InsertSavedNames();
 	//Default aberrations to zero is uneccessary?
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
+void CDMOperator::InsertSavedNames()
+{
+	DigitalMicrograph::TagGroup pers;
+	pers = DigitalMicrograph::GetPersistentTagGroup();
+
+	for(int i = 0; i < NumUsers; i++)
+	{
+		m_OperatorCombo.AddString(UserNames[i].c_str());
+	}
+	
+}
+
+void CDMOperator::LoadCustomDirectory(int user)
+{
+	DigitalMicrograph::TagGroup pers;
+	pers = DigitalMicrograph::GetPersistentTagGroup();
+
+	filepath = UserDirectories[user];
+	DigitalMicrograph::TagGroupSetTagAsString(pers,"Operator Panel:filepath",filepath);
+	pathSet=TRUE;
+}
 
 // This button implements the save image code, which auto tags and
 // saves images to a relevant directory structure.
 void CDMOperator::OnBnClickedButton3()
 {
 	
-	UpdateData(1);
+	UpdateData(TRUE);
 
 	//CWnd* pWnd=GetParent();
 	//BOOL success=pWnd->ModifyStyleEx(0, WS_EX_CONTROLPARENT);
-
-
 
 	// First check to see if we have set the root directory
 	if(pathSet==0)
@@ -206,14 +306,23 @@ void CDMOperator::OnBnClickedButton3()
 
 	std::string datestring = ((LPCTSTR)date);
 
-	if(!DM::DoesDirectoryExist(filepath+"\\"+datestring))
-		DM::CreateDirectory(filepath+"\\"+datestring);
+
+	std::vector<std::string> pathbuilder;
+
+	pathbuilder.push_back(datestring);
+	pathbuilder.push_back(SpecimenName);
+	pathbuilder.push_back("Area "+AreaNumber);
+	
+	// Path order set to default or changed via dialog...
+	
+	if(!DM::DoesDirectoryExist(filepath+"\\"+pathbuilder[pathorder[0]]))
+		DM::CreateDirectory(filepath+"\\"+pathbuilder[pathorder[0]]);
 		
-	if(!DM::DoesDirectoryExist(filepath+"\\"+datestring+"\\"+SpecimenName))
-		DM::CreateDirectory(filepath+"\\"+datestring+"\\"+SpecimenName);
+	if(!DM::DoesDirectoryExist(filepath+"\\"+pathbuilder[pathorder[0]]+"\\"+pathbuilder[pathorder[1]]))
+		DM::CreateDirectory(filepath+"\\"+pathbuilder[pathorder[0]]+"\\"+pathbuilder[pathorder[1]]);
 			
-	if(!DM::DoesDirectoryExist(filepath+"\\"+datestring+"\\"+SpecimenName+"\\Area "+AreaNumber))
-		DM::CreateDirectory(filepath+"\\"+datestring+"\\"+SpecimenName+"\\Area "+AreaNumber);
+	if(!DM::DoesDirectoryExist(filepath+"\\"+pathbuilder[pathorder[0]]+"\\"+pathbuilder[pathorder[1]]+"\\"+pathbuilder[pathorder[2]]))
+		DM::CreateDirectory(filepath+"\\"+pathbuilder[pathorder[0]]+"\\"+pathbuilder[pathorder[1]]+"\\"+pathbuilder[pathorder[2]]);
 
 	DM::Image frontim;
 	
@@ -295,7 +404,7 @@ void CDMOperator::OnBnClickedButton3()
 
 
 	// Count number of files already in directory
-	DM::TagGroup FilesInDir = DM::GetFilesInDirectory(filepath+"\\"+datestring+"\\"+SpecimenName+"\\Area "+AreaNumber, 1 );
+	DM::TagGroup FilesInDir = DM::GetFilesInDirectory(filepath+"\\"+pathbuilder[pathorder[0]]+"\\"+pathbuilder[pathorder[1]]+"\\"+pathbuilder[pathorder[2]], 1 );
 	int Files = DM::TagGroupCountTags(FilesInDir);
 	Files++;
 
@@ -305,16 +414,27 @@ void CDMOperator::OnBnClickedButton3()
 	AddAberrationTags(pers);
 
 	frontim.SetDescriptionText(desc);
-	desc="";
-	m_desc.SetWindowTextA("");
+	
+	std::string description;
+
+	// Only add dashes if description isnt blank...
+	if(desc=="")
+	{
+		description="";
+	}
+	else
+	{
+		description = " - "+desc;
+	}
+
 	frontim.NotifyTagsChanged();
 
 
 	if(operationMode=="IMAGING")
 		{
 			std::string formattedMagnification = FormattedMag(numberMag); 
-			std::string nameImg = filepath+"\\"+datestring+"\\"+SpecimenName+"\\Area "+AreaNumber+"\\"+numoffiles.str()+" - "+SpecimenName+" - "+formattedMagnification+" - b"+binning+" - "+expTime+"s";
-			frontim.SetName(numoffiles.str()+" - "+acqTime+" "+acqDate+" - "+SpecimenName+" - "+formattedMagnification+" - b"+binning+" - "+expTime+"s");
+			std::string nameImg = filepath+"\\"+pathbuilder[pathorder[0]]+"\\"+pathbuilder[pathorder[1]]+"\\"+pathbuilder[pathorder[2]]+"\\"+numoffiles.str()+" - "+SpecimenName+description+" - "+formattedMagnification+" - b"+binning+" - "+expTime+"s";
+			frontim.SetName(numoffiles.str()+" - "+acqTime+" "+acqDate+" - "+SpecimenName+description+" - "+formattedMagnification+" - b"+binning+" - "+expTime+"s");
 			DM::SaveAsGatan(frontim,nameImg);//Save the image
 			DM::OpenAndSetProgressWindow("          Image Saved","","                   :)");
 
@@ -323,8 +443,8 @@ void CDMOperator::OnBnClickedButton3()
 	else if(operationMode=="DIFFRACTION")
 		{
 			std::string formattedMagnification = FormattedMagED(numberMag); 
-			std::string nameImg = filepath+"\\"+datestring+"\\"+SpecimenName+"\\Area "+AreaNumber+"\\"+numoffiles.str()+" - "+SpecimenName+" - "+formattedMagnification+" - b"+binning+" - "+expTime+"s";
-			frontim.SetName(numoffiles.str()+" - "+acqTime+" "+acqDate+" - "+SpecimenName+" - "+formattedMagnification+" - b"+binning+" - "+expTime+"s");
+			std::string nameImg = filepath+"\\"+pathbuilder[pathorder[0]]+"\\"+pathbuilder[pathorder[1]]+"\\"+pathbuilder[pathorder[2]]+"\\"+numoffiles.str()+" - "+SpecimenName+description+" - "+formattedMagnification+" - b"+binning+" - "+expTime+"s";
+			frontim.SetName(numoffiles.str()+" - "+acqTime+" "+acqDate+" - "+SpecimenName+description+" - "+formattedMagnification+" - b"+binning+" - "+expTime+"s");
 			DM::SaveAsGatan(frontim,nameImg); //Save the image
 			DM::OpenAndSetProgressWindow("          Image Saved","","                   :)");
 
@@ -333,8 +453,8 @@ void CDMOperator::OnBnClickedButton3()
 	else if(operationMode=="SCANNING")
 		{
 			std::string formattedMagnification = FormattedMag(numberMag); 
-			std::string nameImg = filepath+"\\"+datestring+"\\"+SpecimenName+"\\Area "+AreaNumber+"\\"+numoffiles.str()+" - "+SpecimenName+" - "+formattedMagnification;
-			frontim.SetName(numoffiles.str()+" - "+acqTime+" "+acqDate+" - "+SpecimenName+" - "+formattedMagnification);
+			std::string nameImg = filepath+"\\"+pathbuilder[pathorder[0]]+"\\"+pathbuilder[pathorder[1]]+"\\"+pathbuilder[pathorder[2]]+"\\"+numoffiles.str()+" - "+SpecimenName+description+" - "+formattedMagnification;
+			frontim.SetName(numoffiles.str()+" - "+acqTime+" "+acqDate+" - "+SpecimenName+description+" - "+formattedMagnification);
 			DM::SaveAsGatan(frontim,nameImg);//Save the image
 			DM::OpenAndSetProgressWindow("          Image Saved","","                   :)");
 		}
@@ -346,6 +466,10 @@ void CDMOperator::OnBnClickedButton3()
 
 	DM::ImageDocument imdoc = frontim.GetOrCreateImageDocument();
 	imdoc.Clean();
+
+	//Reset description text
+	desc="";
+	m_desc.SetWindowTextA("");
 
 }
 
@@ -408,7 +532,28 @@ void CDMOperator::OnBnClickedButton2()
 		filepath = szPath;
 	}
 
+	// Check for a user with the same name as this user...
+	// If so update their directory
+	bool found = false;
+	int index = 0;
 
+	for(int i = 0; i < NumUsers; i++)
+	{
+		if(UserNames[i] == OperatorName)
+		{
+			found = true;
+			index = i;
+		}
+	}
+	
+	DigitalMicrograph::TagGroup pers = DigitalMicrograph::GetPersistentTagGroup();
+
+	if(found)
+	{
+		std::string usertagpath = "Operator Panel:UserDirs:"+boost::lexical_cast<std::string>(index);
+		UserDirectories[index] = filepath;
+		DigitalMicrograph::TagGroupSetTagAsString(pers,usertagpath.c_str(),filepath);
+	}
 }
 
 void CDMOperator::OnEditUpdate()
@@ -452,6 +597,10 @@ void CDMOperator::OnComboChange()
 
 		OperatorName = Operator2;
 	}
+
+	// Set directory to users saved directory if user picked from combobox
+	LoadCustomDirectory(item);
+	LoadPathOrder(item);
 
 }
 
@@ -667,3 +816,109 @@ void CDMOperator::AddAberrationTags(DM::TagGroup imagetags)
 	DM::TagGroupSetTagAsString(imagetags,"Aberrations:S5(Angle)",s5ang);
 
 };
+
+
+// This button adds current settings as a new user...
+void CDMOperator::OnBnClickedButton4()
+{
+	// Check for a user with the same name as this user...
+	bool found = false;
+	int index = 0;
+
+	for(int i = 0; i < NumUsers; i++)
+	{
+		if(UserNames[i] == OperatorName)
+		{
+			found = true;
+			index = i;
+		}
+	}
+	
+	DigitalMicrograph::TagGroup pers = DigitalMicrograph::GetPersistentTagGroup();
+
+	if(found)
+	{
+		std::string usertagpath = "Operator Panel:UserDirs:"+boost::lexical_cast<std::string>(index);
+		UserDirectories[index] = filepath;
+		DigitalMicrograph::TagGroupSetTagAsString(pers,usertagpath.c_str(),filepath);
+	}
+	else
+	{
+		NumUsers++;
+		UserNames.push_back(OperatorName);
+		UserDirectories.push_back(filepath);
+
+		std::vector<int>temppathorder;
+		temppathorder.push_back(1);
+		temppathorder.push_back(0);
+		temppathorder.push_back(2);
+
+		UserPathOrders.push_back(temppathorder);
+
+
+		std::string usertagpath = "Operator Panel:UserDirs:"+boost::lexical_cast<std::string>(NumUsers-1);
+		DigitalMicrograph::TagGroupSetTagAsString(pers,usertagpath.c_str(),filepath);
+
+		std::string usertagpath2 = "Operator Panel:UserNames:"+boost::lexical_cast<std::string>(NumUsers-1);
+		DigitalMicrograph::TagGroupSetTagAsString(pers,usertagpath2.c_str(),OperatorName);
+
+		std::string usertagpath3 = "Operator Panel:Users";
+		DigitalMicrograph::TagGroupSetTagAsString(pers,usertagpath3.c_str(),boost::lexical_cast<std::string>(NumUsers));
+
+		m_OperatorCombo.AddString(OperatorName.c_str());
+	}
+
+	// Add Path Order
+	SavePathOrder();
+}
+
+void CDMOperator::SavePathOrder()
+{
+	DigitalMicrograph::TagGroup pers = DigitalMicrograph::GetPersistentTagGroup();
+
+	bool found = false;
+	int index = 0;
+
+	for(int i = 0; i < NumUsers; i++)
+	{
+		if(UserNames[i] == OperatorName)
+		{
+			found = true;
+			index = i;
+		}
+	}
+	
+	if(found)
+	{
+		std::string usertagpath = "Operator Panel:UserPathOrders:"+boost::lexical_cast<std::string>(index)+":0";
+		std::string usertagpath1 = "Operator Panel:UserPathOrders:"+boost::lexical_cast<std::string>(index)+":1";
+		std::string usertagpath2 = "Operator Panel:UserPathOrders:"+boost::lexical_cast<std::string>(index)+":2";
+		
+		UserPathOrders[index][0] = pathorder[0];
+		UserPathOrders[index][1] = pathorder[1];
+		UserPathOrders[index][2] = pathorder[2];
+
+		DigitalMicrograph::TagGroupSetTagAsString(pers,usertagpath.c_str(),boost::lexical_cast<std::string>(pathorder[0]));
+		DigitalMicrograph::TagGroupSetTagAsString(pers,usertagpath1.c_str(),boost::lexical_cast<std::string>(pathorder[1]));
+		DigitalMicrograph::TagGroupSetTagAsString(pers,usertagpath2.c_str(),boost::lexical_cast<std::string>(pathorder[2]));
+	}
+
+}
+
+void CDMOperator::LoadPathOrder(int user)
+{
+	DigitalMicrograph::TagGroup pers;
+	pers = DigitalMicrograph::GetPersistentTagGroup();
+
+	pathorder[0] = UserPathOrders[user][0];
+	pathorder[1] = UserPathOrders[user][1];
+	pathorder[2] = UserPathOrders[user][2];
+}
+
+void CDMOperator::OnBnClickedButton5()
+{
+	DirectoryBuilder dlg(pathorder[0],pathorder[1],pathorder[2],this);
+
+	dlg.DoModal();
+	// TODO: Add your control notification handler code here
+}

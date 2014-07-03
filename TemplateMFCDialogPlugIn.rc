@@ -13,13 +13,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.S.) resources
+// English (United States) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -95,124 +93,40 @@ BEGIN
     END
 END
 
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Dialog
-//
-
-IDD_DMDIALOG DIALOGEX 0, 0, 86, 58
-STYLE DS_SETFONT | WS_CHILD | WS_VISIBLE
-FONT 8, "Calibri", 400, 0, 0x0
-BEGIN
-    CONTROL         "Radio1",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,7,2,39,10
-    CONTROL         "Radio2",IDC_RADIO2,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,7,12,39,10
-    PUSHBUTTON      "Button1",IDC_BUTTON1,5,25,50,14,WS_GROUP
-    PUSHBUTTON      "Button2",IDC_BUTTON2,5,41,50,14,WS_GROUP
-END
-
-IDD_DMPROPERTYPAGE1 DIALOGEX 0, 0, 106, 44
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Onions"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
-BEGIN
-    CONTROL         "Radio1",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON | WS_GROUP,6,9,39,10
-    CONTROL         "Radio2",IDC_RADIO2,"Button",BS_AUTORADIOBUTTON,6,23,39,10
-    PUSHBUTTON      "I like onions",IDC_ONIONS_BUTTON,52,4,50,14,WS_GROUP
-    PUSHBUTTON      "Button1",IDC_BUTTON1,52,24,50,14
-END
-
-IDD_DMPROPERTYPAGE2 DIALOGEX 0, 0, 106, 44
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Carrots"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
-BEGIN
-    PUSHBUTTON      "I like carrots",IDC_CARROTS_BUTTON,27,14,50,14
-END
-
-IDD_PROPPAGETEST1 DIALOGEX 0, 0, 200, 75
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Page 1"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
-BEGIN
-    DEFPUSHBUTTON   "Button 1",ID_BUTTON_1,143,6,50,16
-    PUSHBUTTON      "Button 2",ID_BUTTON_2,143,32,50,16
-    LTEXT           "Property Page 1",IDC_STATIC,21,19,52,8
-END
-
-IDD_PROPPAGETEST2 DIALOGEX 0, 0, 200, 75
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Page 2"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
-BEGIN
-    DEFPUSHBUTTON   "Button 3",ID_BUTTON_3,85,53,50,16
-    PUSHBUTTON      "Button 4",ID_BUTTON_4,143,53,50,16
-    LTEXT           "Property Page 2",IDC_STATIC,30,20,52,8
-END
-
-IDD_TESTDIALOG1 DIALOGEX 0, 0, 231, 67
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Dialog"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
-BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,112,43,50,16
-    PUSHBUTTON      "Cancel",IDCANCEL,173,43,50,16
-    LTEXT           "String Value 1",IDC_STRING_VALUE_1_LABEL,15,15,54,10
-    EDITTEXT        IDC_STRING_VALUE_1_EDIT,70,13,104,13,ES_AUTOHSCROLL
-END
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// DESIGNINFO
-//
-
-#ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
-BEGIN
-    IDD_DMDIALOG, DIALOG
-    BEGIN
-        VERTGUIDE, 30
-        VERTGUIDE, 46
-        BOTTOMMARGIN, 55
-    END
-END
-#endif    // APSTUDIO_INVOKED
-
-#endif    // English (U.S.) resources
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.K.) resources
+// English (United Kingdom) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
 #pragma code_page(1252)
-#endif //_WIN32
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Dialog
 //
 
-IDD_OPERATOR DIALOGEX 0, 0, 141, 154
+IDD_OPERATOR DIALOGEX 0, 0, 141, 170
 STYLE DS_SETFONT | WS_CHILD
 FONT 7, "Segoe UI", 400, 0, 0x0
 BEGIN
     LTEXT           "Operator:",IDC_STATIC,13,11,42,8
-    COMBOBOX        IDC_COMBO1,54,9,75,64,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO1,54,9,56,64,CBS_DROPDOWN | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Specimen:",IDC_STATIC,13,27,42,8
     EDITTEXT        IDC_SPECIMENEDIT,54,24,75,14,ES_AUTOHSCROLL
     LTEXT           "Area #:",IDC_STATIC,17,43,31,8
     EDITTEXT        IDC_AREAEDITSPIN,84,41,35,14,ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "",IDC_SPINAREABUTTON,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | WS_TABSTOP,118,41,11,14
     PUSHBUTTON      "Set Aberration Values",IDC_BUTTON1,28,60,84,14
-    PUSHBUTTON      "Set Folder",IDC_BUTTON2,22,79,46,14
-    PUSHBUTTON      "Save Image",IDC_BUTTON3,72,79,46,14
+    PUSHBUTTON      "Set Folder",IDC_BUTTON2,17,79,51,14
+    PUSHBUTTON      "Save Image",IDC_BUTTON3,12,143,114,14
     EDITTEXT        IDC_EDIT2,13,106,113,34,ES_MULTILINE | ES_AUTOHSCROLL
     LTEXT           "Add description text:",IDC_STATIC,14,97,79,8
+    PUSHBUTTON      "+",IDC_BUTTON4,111,9,18,14
+    PUSHBUTTON      "Set Path Order",IDC_BUTTON5,71,79,53,14
 END
 
 IDD_ABDIALOG DIALOGEX 0, 0, 174, 197
@@ -265,6 +179,19 @@ BEGIN
     LTEXT           "A3",IDC_STATIC,15,52,10,8
 END
 
+IDD_DIALOG2 DIALOGEX 0, 0, 255, 76
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,148,55,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,198,55,50,14
+    COMBOBOX        IDC_COMBO1,42,31,48,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO2,95,31,48,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO3,148,31,48,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Choose the directory structure to create:",IDC_STATIC,43,16,156,8
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -272,14 +199,14 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_OPERATOR, DIALOG
     BEGIN
         LEFTMARGIN, 4
         RIGHTMARGIN, 136
         TOPMARGIN, 7
-        BOTTOMMARGIN, 147
+        BOTTOMMARGIN, 163
     END
 
     IDD_ABDIALOG, DIALOG
@@ -289,41 +216,18 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 190
     END
+
+    IDD_DIALOG2, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 248
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 69
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Dialog Info
-//
-
-IDD_OPERATOR DLGINIT
-BEGIN
-    IDC_COMBO1, 0x403, 5, 0
-0x6441, 0x6d61, "\000" 
-    IDC_COMBO1, 0x403, 5, 0
-0x6c41, 0x7865, "\000" 
-    IDC_COMBO1, 0x403, 4, 0
-0x6e41, 0x0061, 
-    IDC_COMBO1, 0x403, 6, 0
-0x7341, 0x6d73, 0x0061, 
-    IDC_COMBO1, 0x403, 7, 0
-0x654a, 0x6572, 0x796d, "\000" 
-    IDC_COMBO1, 0x403, 5, 0
-0x654e, 0x6c69, "\000" 
-    IDC_COMBO1, 0x403, 5, 0
-0x6552, 0x617a, "\000" 
-    IDC_COMBO1, 0x403, 8, 0
-0x6952, 0x6863, 0x7261, 0x0064, 
-    IDC_COMBO1, 0x403, 6, 0
-0x6f52, 0x6962, 0x006e, 
-    IDC_COMBO1, 0x403, 6, 0
-0x7453, 0x7665, 0x0065, 
-    0
-END
-
-#endif    // English (U.K.) resources
+#endif    // English (United Kingdom) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
