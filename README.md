@@ -8,4 +8,4 @@ This plugin adds a small docked dialog which allows for easy access to changing 
 Each user can also set individual folder preferences so their images are automatically saved to the same directory when they select their profile.
 Each user can also customise the order in which the directory structure is built up i.e Home\Specimen\Date\Area or Home\Date\Specimen\Area etc. and this is also saved with their profile.
 
-![GUI](adyson.github.io/DMSave/img/gui.png)
+![GUI](http://adyson.github.io/DMSave/img/gui.png)
